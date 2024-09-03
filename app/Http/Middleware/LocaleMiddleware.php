@@ -9,10 +9,8 @@ class LocaleMiddleware
 {
     public function handle($request, Closure $next)
     {
-        //$locale = $request->header('Accept-Language', 'en');
-        $locale = $request->lang ? $request->lang : 'en';
+        $locale = $request->header('Accept-Language', 'en');
         App()->setLocale($locale);
-
         return $next($request);
     }
 }

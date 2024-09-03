@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('api_localization')->group(function () {
-
-
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 
@@ -22,6 +19,6 @@ Route::middleware('api_localization')->group(function () {
         Route::post('/follow', [UserController::class, 'follow']);
     });
 
-});
+
 
 

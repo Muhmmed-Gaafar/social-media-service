@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         $this->followers()->attach($user->id);
     }
+
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'users.'.$this->id;
+    }
 }
