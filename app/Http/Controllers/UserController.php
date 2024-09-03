@@ -17,25 +17,6 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-//    public function follow(FollowRequest $request): JsonResponse
-//    {
-//        $followedId = $request->input('followed_id');
-//        $result = $this->userService->followUser($followedId);
-//
-//        if (!$result['status']) {
-//            $message = __('messages.already_followed');
-//            return response()->json([
-//                'message' => $message,
-//            ], 400);
-//        }
-//
-//        $message = __('messages.followed');
-//        return response()->json([
-//            'message' => $message,
-//            'follow' => new FollowResource($result['follow']),
-//        ], 201);
-//    }
-
     public function follow(FollowRequest $request): JsonResponse
     {
         $followedId = $request->input('followed_id');
