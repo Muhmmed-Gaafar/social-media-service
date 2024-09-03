@@ -3,7 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
+use App\Mail\UserFollowed;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,4 +23,5 @@ Route::middleware('api_localization')->group(function () {
     });
 
 });
+
 
