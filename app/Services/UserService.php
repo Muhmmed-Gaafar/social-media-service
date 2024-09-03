@@ -12,6 +12,9 @@ class UserService
     public function followUser($followedId)
     {
         $follower = Auth::id();
+        if ($follower === $follower) {
+            return ['status' => false, 'message' => __('messages.error_self')];
+        }
         $exists = Follow::where('follower_id', $follower)
             ->where('followed_id', $followedId->id)
             ->exists();

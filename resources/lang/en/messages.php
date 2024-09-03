@@ -9,4 +9,5 @@ return [
     'messages.followed'=>'you follow this user',
     'followed' => 'Successfully followed the user.',
     'already_followed' => 'You are already following this user.',
+    'error_self'=>'you cannot follow yourself'
 ];
