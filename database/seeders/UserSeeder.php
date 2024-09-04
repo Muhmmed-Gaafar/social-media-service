@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
          \App\Models\User::factory()->create([
              'username' => 'User User',
-            'email' => 'user@gmail.com',
+             'email' => 'user@gmail.com',
              'password' => '123123123',
          ]);
         User::factory()->count(10)->create();

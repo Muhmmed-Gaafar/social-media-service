@@ -2,24 +2,48 @@
 
 namespace App\Services;
 
+use App\Http\Resources\TweetResource;
 use App\Models\Tweet;
-use Illuminate\Support\Facades\Auth;
+use App\Trait\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class TweetService
 {
-    public function createTweet(array $data): ?Tweet
+    use Response;
+    public function createTweet(array $data): JsonResponse
     {
-        return  Tweet::create([
-            'user_id' => $data['user_id'],
-            'content' => $data['tweet_text'],
+        $tweet = Tweet::create([
+            'user_id' => Auth::id(),
+            'tweet_text' => $data['tweet_text'],
         ]);
+        $message = __('messages.tweet_created');
+        $data = new TweetResource($tweet);
+        return $this->success(
+            data: $data,
+            message: $message,
+            status: 200
+        );
     }
-
-
-    public function getTimeline()
+    public function getTimeline(): JsonResponse
     {
-        return Tweet::with('user')->paginate(10);
+        $user = Auth::user();
+        if ($user) {
+            $followerIds = $user->follows()->pluck('followed_id');
+            $tweets = Tweet::with('user')
+                ->whereIn('user_id', $followerIds)
+                ->orWhere('user_id', $user->id)
+                ->paginate(10);
+        } else {
+            $message = __('messages.you_not_authenticated');
+        }
+        $message = __('messages.all_tweets');
+        return $this->success(
+            data: $tweets,
+            message: $message,
+            status: 200
+        );
     }
 }
+
 

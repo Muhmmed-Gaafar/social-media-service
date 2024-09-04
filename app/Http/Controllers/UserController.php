@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FollowRequest;
-use App\Http\Resources\FollowResource;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -20,23 +19,14 @@ class UserController extends Controller
     public function follow(FollowRequest $request): JsonResponse
     {
         $followedId = $request->input('followed_id');
-        $followedUser = User::findOrFail($followedId);
-
-        $result = $this->userService->followUser($followedUser);
-
-        if (!$result['status']) {
+        $followedUser = User::find($followedId);
+        if (!$followedUser) {
             return response()->json([
-                'message' => $result['message'],
-            ], 400);
+                'status' => 404,
+                'message' => __('messages.user_not_found'),
+            ], 404);
         }
-
-        return response()->json([
-            'message' => $result['message'],
-            'follow' => new FollowResource($result['follow']),
-        ], 201);
+        return $this->userService->followUser($followedUser);
     }
-
-
-
 }
 

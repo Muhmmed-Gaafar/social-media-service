@@ -21,7 +21,7 @@ class UserFollowedNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['broadcast', 'database'];
+        return ['broadcast'];
     }
 
     public function toBroadcast($notifiable)
